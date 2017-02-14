@@ -1,0 +1,24 @@
+{
+    "name": "in-the-beam/laravel-email-confirmation",
+    "keywords": [ "in-the-beam", "itb", "confirm email", "validate email", "confirmation email", "validation email", "laravel email", "laravel" ],
+    "homepage" : "https://gitlab.com/in-the-beam/laravel-email-confirmation",
+    "description": "E-Mail confirmation when registering",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stanislav Kabin",
+            "email": "me@h-zone.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "ITB\\LEC\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ITB\\LEC\\": "src/"
+        }
+    }
+}
