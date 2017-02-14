@@ -1,10 +1,7 @@
 <?php
 namespace ITB\LEC\Listeners;
 
-use Notification;
 use Illuminate\Auth\Events\Registered;
-use ITB\LEC\Events\LECRegisteredUserEvent;
-use ITB\LEC\Notifications\ConfirmEmailNotification;
 use ITB\LEC\Satellite;
 
 class LECRegisteredUserListener
@@ -22,16 +19,11 @@ class LECRegisteredUserListener
     /**
      * Handle the event.
      *
-     * @param  LECRegisteredUserEvent  $event
+     * @param  Illuminate\Auth\Events\Registered  $event
      * @return void
      */
     public function handle( Registered $event )
     {
-        $User = $event->user;
-        $User->confirm()->create([
-            'is_confirmed' => false,
-            'hash'         => Satellite::makeHash(23),
-        ]);
-        Notification::send( $User, new ConfirmEmailNotification( $User ) );
+    	Satellite::createConfirmationProcedure( $event->user );
     }
 }

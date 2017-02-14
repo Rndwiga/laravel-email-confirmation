@@ -151,4 +151,12 @@ class ConfirmController extends Controller
 	{
 		return view( 'LEC::auth.confirm.re-sent' );
 	}
+
+	/**
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function getWarning()
+	{
+		return view( 'LEC::auth.confirm.warning' );
+	}
 }

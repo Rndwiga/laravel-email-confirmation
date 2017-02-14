@@ -1,5 +1,5 @@
 <?php
 return [
-	'enabled'      => true,
-	'route_prefix' => 'confirm',
+	'route_prefix'      => 'confirm',
+	'catch_unconfirmed' => true,
 ];

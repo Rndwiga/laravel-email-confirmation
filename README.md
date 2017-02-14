@@ -1,7 +1,18 @@
 # Laravel Email Confirmation Package
 
+## Features
+- Post-registration E-Mail confirmation
+- Middleware to catch Users with unconfirmed E-Mail (see below)
+- Re-send confirmation letter page
+- User-friemdly confirmation / repeat letter pages (for authenticated user - substitute the correct values of hash/email)
+- Flexible configuration for route prefixex
+
+## Milestones
+- Google re-Captcha
+- Enable/Disable entire package through configuration
+
 ## Requirements
-- Laravel 5.4+ (Uses markdown email notifications)
+- Laravel 5.4+ (May use markdown email notifications)
 - App\User and Auth from the Box will be used. No other Auth methods is supported!
 - App\User must be Notifiable;
 
@@ -57,6 +68,34 @@ protected $listen = [
     ],
 //....
 ];
+
+```
+Unconfirmed E-Mail catch Middleware
+in `app\Http\Kernel.php` add route middleware
+```
+    /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
+    protected $routeMiddleware = [
+        // .....
+        'LEC.catchUnconfirmedEmail' => \ITB\LEC\Middleware\LECCatchUnconfirmed::class,
+        // .....
+    ];
+
+```
+chanhe `routes/web.php` as follow
+```
+Auth::routes();
+Route::group( ['middleware' => [ 'web', 'LEC.catchUnconfirmedEmail' ] ], function()
+{
+    //....
+    // Your Routes is here
+    //....
+});
 
 ```
 # MIT License
