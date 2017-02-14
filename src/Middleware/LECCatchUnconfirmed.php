@@ -24,22 +24,22 @@ class LECCatchUnconfirmed
 		{
 			if ( auth()->check() )
 			{
-				$User = auth()->user();
+				$User    = auth()->user();
 				$Confirm = $User->confirm;
 				if ( !is_null( $Confirm ) )
 				{
-					// confirm object exists
-					if ( $Confirm->is_confirmed === false )
+					if ( !$Confirm->is_confirmed )
 					{
-						// not confirmed - catch them and warn
+						if ( is_null( $Confirm->hash ) )
+						{
+							Satellite::createConfirmationProcedure( $User );
+						}
 						return redirect( config( 'LEC.route_prefix' ) . '/warning' );
 					}
 				}
 				else
 				{
-					// create default confirm related to user object
 					Satellite::createConfirmationProcedure( $User );
-					// not confirmed - catch them and warn
 					return redirect( config( 'LEC.route_prefix' ) . '/warning' );
 				}
 			}

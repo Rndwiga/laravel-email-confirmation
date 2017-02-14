@@ -14,7 +14,6 @@ class LECServiceProvider extends ServiceProvider
 	{
 		$this->loadTranslationsFrom( realpath( __DIR__ . '/../../resources/lang' ), 'LEC' );
 		$this->loadViewsFrom( realpath( __DIR__ . '/../../resources/views' ), 'LEC' );
-		$router->middleware( 'LEC.catchUnconfirmedEmail', LECCatchUnconfirmed::class );
 		$router->group( [
 			'prefix'    => config( 'LEC.route_prefix', 'confirm' ),
 			'namespace' => 'ITB\\LEC\\Controllers',
