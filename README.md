@@ -2,7 +2,7 @@
 
 ## Features
 - Post-registration E-Mail confirmation
-- Middleware to catch Users with unconfirmed E-Mail (see below)
+- Middleware trap to catch Users with unconfirmed E-Mail (see below)
 - Re-send confirmation letter page
 - User-friemdly confirmation / repeat letter pages (for authenticated user - substitute the correct values of hash/email)
 - Flexible configuration for route prefixex
@@ -70,7 +70,7 @@ protected $listen = [
 ];
 
 ```
-Unconfirmed E-Mail catch Middleware
+Unconfirmed E-Mail catch (Middleware trap)
 in `app\Http\Kernel.php` add route middleware
 ```
     /**
@@ -87,7 +87,7 @@ in `app\Http\Kernel.php` add route middleware
     ];
 
 ```
-chanhe `routes/web.php` as follow
+change `routes/web.php` as follow
 ```
 Auth::routes();
 Route::group( ['middleware' => [ 'web', 'LEC.catchUnconfirmedEmail' ] ], function()
@@ -96,6 +96,10 @@ Route::group( ['middleware' => [ 'web', 'LEC.catchUnconfirmedEmail' ] ], functio
     // Your Routes is here
     //....
 });
-
 ```
+Now all requests (Authenticated users only!) will be checked for confirmed E-Mail and trapped to "/confirm/warning" page
+You can copy LECCatchUnconfirmed.php Middleware to any other place and append your condition as you wish. Dont forget to define new middleware :)
+
+Enjoy!
+
 # MIT License
