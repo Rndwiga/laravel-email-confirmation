@@ -13,14 +13,7 @@ class ConfirmEmail extends FormRequest
      */
     public function authorize()
     {
-        if ( auth()->check() )
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return true;
     }
 
     /**
