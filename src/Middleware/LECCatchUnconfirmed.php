@@ -3,6 +3,9 @@ namespace ITB\LEC\Middleware;
 
 use Closure;
 use ITB\LEC\Satellite;
+use Notification;
+use ITB\LEC\Notifications\ConfirmEmailNotification;
+
 
 /**
  * Class LECCatchUnconfirmed
@@ -24,22 +27,23 @@ class LECCatchUnconfirmed
 		{
 			if ( auth()->check() )
 			{
-				$User    = auth()->user();
-				$Confirm = $User->confirm;
-				if ( !is_null( $Confirm ) )
+				if ( !is_null( auth()->user()->confirm ) )
 				{
-					if ( !$Confirm->is_confirmed )
+					if ( !auth()->user()->confirm->is_confirmed )
 					{
-						if ( is_null( $Confirm->hash ) )
+						if ( is_null( auth()->user()->confirm->hash ) )
 						{
-							Satellite::createConfirmationProcedure( $User );
+							auth()->user()->confirm->hash = Satellite::makeHash( 23 );
+							auth()->user()->confirm->save();
+							Notification::send( auth()->user(), new ConfirmEmailNotification( auth()->user() ) );
 						}
 						return redirect( config( 'LEC.route_prefix' ) . '/warning' );
 					}
 				}
 				else
 				{
-					Satellite::createConfirmationProcedure( $User );
+					Satellite::createUnconfirmed( auth()->user() );
+					Notification::send( auth()->user(), new ConfirmEmailNotification( auth()->user() ) );
 					return redirect( config( 'LEC.route_prefix' ) . '/warning' );
 				}
 			}

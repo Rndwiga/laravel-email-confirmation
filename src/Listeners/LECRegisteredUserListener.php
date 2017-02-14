@@ -3,6 +3,8 @@ namespace ITB\LEC\Listeners;
 
 use Illuminate\Auth\Events\Registered;
 use ITB\LEC\Satellite;
+use Notification;
+use ITB\LEC\Notifications\ConfirmEmailNotification;
 
 class LECRegisteredUserListener
 {
@@ -24,6 +26,7 @@ class LECRegisteredUserListener
      */
     public function handle( Registered $event )
     {
-    	Satellite::createConfirmationProcedure( $event->user );
+        Satellite::createUnconfirmed( $event->user );
+        Notification::send( $event->user, new ConfirmEmailNotification( $event->user ) );
     }
 }

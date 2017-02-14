@@ -3,6 +3,7 @@ namespace ITB\LEC\Events;
 
 use Illuminate\Queue\SerializesModels;
 use App\User;
+use ITB\LEC\Satellite;
 
 class LECRegisteredUserEvent
 {
