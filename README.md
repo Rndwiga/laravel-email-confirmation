@@ -59,4 +59,4 @@ protected $listen = [
 ];
 
 ```
-# Under Apache 2.0 License !
+# MIT License
