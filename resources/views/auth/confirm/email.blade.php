@@ -8,7 +8,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">{{ trans( 'LEC::LEC.view.confirm.title' ) }}</div>
                 <div class="panel-body">
-                    <form name="confirm-email" class="form-horizontal" method="POST" action="{{ url( '/confirm/email' ) }}">
+                    <form name="confirm-email" class="form-horizontal" method="POST" action="{{ url( config('LEC.route_prefix').'/email' ) }}">
                         {{csrf_field()}}
                         <div class="form-group{{ ( !empty( $errors ) && $errors->has('email') ) ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">{{ trans( 'LEC::LEC.view.confirm.email' ) }}</label>
@@ -36,7 +36,7 @@
                             <div class="col-md-8 col-md-offset-4">
                                 <input type="submit" class="btn btn-primary">
 
-                                <a class="btn btn-link" href="{{ url( '/confirm/repeat' ) }}">
+                                <a class="btn btn-link" href="{{ url( config('LEC.route_prefix').'/repeat' ) }}">
                                     {{ trans( 'LEC::LEC.view.confirm.resend' ) }}
                                 </a>
                             </div>

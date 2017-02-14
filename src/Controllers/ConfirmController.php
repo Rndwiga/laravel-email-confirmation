@@ -2,17 +2,16 @@
 namespace ITB\LEC\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Http\Request;
+use ITB\LEC\Notifications\ConfirmEmailNotification;
 use ITB\LEC\Requests\ConfirmEmail;
 use ITB\LEC\Requests\ResendEmail;
 use ITB\LEC\Satellite;
-use App\User;
 use Notification;
-use ITB\LEC\Notifications\ConfirmEmailNotification;
 
 class ConfirmController extends Controller
 {
-
 	/**
 	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|Response
 	 */
@@ -31,41 +30,49 @@ class ConfirmController extends Controller
 		}
 		else
 		{
-			$User = User::where( 'email', $email )->first();
+			$User = User::where( 'email', $email )
+				->first()
+			;
 		}
 		if ( empty( $User ) )
 		{
-			$error['general'] = trans( 'LEC::LEC.view.confirm.not-found' );
+			$error[ 'general' ] = trans( 'LEC::LEC.view.confirm.not-found' );
 		}
 		else
 		{
 			if ( $User->email == $email )
 			{
 				$Confirm = $User->confirm;
-				if ( !empty($Confirm) && $Confirm->hash == $vcode )
+				if ( !empty( $Confirm ) && $Confirm->hash == $vcode )
 				{
 					$Confirm->is_confirmed = true;
 					$Confirm->hash         = null;
 					$Confirm->save();
-					return redirect( '/confirm/successfull' );
+					return redirect( url( config( 'LEC.route_prefix' ) . '/successfull' ) );
 				}
 				else
 				{
-					$error['general'] = trans( 'LEC::LEC.view.confirm.not-found' );
+					$error[ 'general' ] = trans( 'LEC::LEC.view.confirm.not-found' );
 				}
 			}
 			else
 			{
-				$error['general'] = trans( 'LEC::LEC.view.confirm.not-found' );
+				$error[ 'general' ] = trans( 'LEC::LEC.view.confirm.not-found' );
 			}
 		}
 		if ( !empty( $error ) )
 		{
-			return redirect()->back()->withErrors( $error );
+			return redirect()
+				->back()
+				->withErrors( $error )
+				;
 		}
 		else
 		{
-			return redirect()->back()->withErrors( [ trans( 'LEC::LEC.view.confirm.something-wrong' ) ] );
+			return redirect()
+				->back()
+				->withErrors( [ trans( 'LEC::LEC.view.confirm.something-wrong' ) ] )
+				;
 		}
 	}
 
@@ -81,23 +88,28 @@ class ConfirmController extends Controller
 		}
 		else
 		{
-			$User = User::where( 'email', $email )->first();
+			$User = User::where( 'email', $email )
+				->first()
+			;
 		}
 		if ( !empty( $User ) && $User->email == $email )
 		{
 			$Confirm = $User->confirm;
-			$Confirm->save([
+			$Confirm->save( [
 				'is_confirmed' => false,
-				'hash'         => Satellite::makeHash(23),
-			]);
+				'hash'         => Satellite::makeHash( 23 ),
+			] );
 			Notification::send( $User, new ConfirmEmailNotification( $User ) );
-			return redirect( '/confirm/re-sent' );
+			return redirect( url( config( 'LEC.route_prefix' ) . '/re-sent' ) );
 		}
 		else
 		{
-			return redirect()->back()->withErrors([
-				trans( 'LEC::LEC.view.confirm.not-found' )
-			]);
+			return redirect()
+				->back()
+				->withErrors( [
+					trans( 'LEC::LEC.view.confirm.not-found' ),
+				] )
+				;
 		}
 	}
 
@@ -139,5 +151,4 @@ class ConfirmController extends Controller
 	{
 		return view( 'LEC::auth.confirm.re-sent' );
 	}
-
 }
