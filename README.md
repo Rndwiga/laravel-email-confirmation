@@ -22,7 +22,7 @@ composer require "in-the-beam/laravel-email-confirmation"
 ```
 Add Service Provider to `config/app.php`
 ```
-    ITB\LEC\LECServiceProvider::class,
+    ITB\LEC\Providers\LECServiceProvider::class,
 ```
 Add Traits to:
 `App\User.php`
