@@ -82,7 +82,7 @@ in `app\Http\Kernel.php` add route middleware
      */
     protected $routeMiddleware = [
         // .....
-        'LEC.catchUnconfirmedEmail' => \ITB\LEC\Middleware\LECCatchUnconfirmed::class,
+        'ITB.catchUnconfirmedEmail' => \ITB\LEC\Middleware\LECCatchUnconfirmed::class,
         // .....
     ];
 
@@ -90,7 +90,7 @@ in `app\Http\Kernel.php` add route middleware
 change `routes/web.php` as follow
 ```
 Auth::routes();
-Route::group( ['middleware' => [ 'web', 'LEC.catchUnconfirmedEmail' ] ], function()
+Route::group( ['middleware' => [ 'web', 'ITB.catchUnconfirmedEmail' ] ], function()
 {
     //....
     // Your Routes is here
