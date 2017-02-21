@@ -42,17 +42,13 @@ Publich configuration
 ```
 php artisan vendor:publish --provider="ITB\LEC\Providers\LECServiceProvider" --tag="config"
 ```
-Publish Views (if You plan to modify it)
+Publish Views
 ```
 php artisan vendor:publish --provider="ITB\LEC\Providers\LECServiceProvider" --tag="views"
 ```
-Publish Lang (if You plan to modify it)
+Publish Lang
 ```
 php artisan vendor:publish --provider="ITB\LEC\Providers\LECServiceProvider" --tag="lang"
-```
-OR PUBLISH ALL-IN-ONE
-```
-php artisan vendor:publish --provider="ITB\LEC\Providers\LECServiceProvider"
 ```
 then
 ```

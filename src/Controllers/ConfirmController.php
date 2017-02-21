@@ -19,7 +19,7 @@ class ConfirmController extends Controller
 	{
 		if ( auth()->check() && auth()->user()->confirm->is_confirmed === true )
 		{
-			return view( 'LEC::auth.confirm.already-confirmed' );
+			return view( 'auth.confirm.already-confirmed' );
 		}
 		$email = $request->get( 'email' );
 		$vcode = $request->get( 'vcode' );
@@ -120,11 +120,11 @@ class ConfirmController extends Controller
 	{
 		if ( auth()->check() && auth()->user()->confirm->is_confirmed === true )
 		{
-			return view( 'LEC::auth.confirm.already-confirmed' );
+			return view( 'auth.confirm.already-confirmed' );
 		}
 		else
 		{
-			return view( 'LEC::auth.confirm.email', [ 'hash' => $hash ] );
+			return view( 'auth.confirm.email', [ 'hash' => $hash ] );
 		}
 	}
 
@@ -133,7 +133,7 @@ class ConfirmController extends Controller
 	 */
 	public function getRepeatConfirm()
 	{
-		return view( 'LEC::auth.confirm.repeat' );
+		return view( 'auth.confirm.repeat' );
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ConfirmController extends Controller
 	 */
 	public function getSuccessfull()
 	{
-		return view( 'LEC::auth.confirm.successfull' );
+		return view( 'auth.confirm.successfull' );
 	}
 
 	/**
@@ -149,7 +149,7 @@ class ConfirmController extends Controller
 	 */
 	public function getResent()
 	{
-		return view( 'LEC::auth.confirm.re-sent' );
+		return view( 'auth.confirm.re-sent' );
 	}
 
 	/**
@@ -157,6 +157,6 @@ class ConfirmController extends Controller
 	 */
 	public function getWarning()
 	{
-		return view( 'LEC::auth.confirm.warning' );
+		return view( 'auth.confirm.warning' );
 	}
 }
